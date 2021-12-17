@@ -15,7 +15,7 @@ https://github.com/unifiedjs/unified
 https://developer.microsoft.com/en-us/microsoft-365
 
 
-# Screen Shots
+# Screenshots
 ![Results](/assets/Screenshot-1.png)
 
 <br/>
