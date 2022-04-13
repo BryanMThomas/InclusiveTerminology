@@ -1,21 +1,21 @@
-import {unified} from 'unified'
+import { unified } from 'unified'
 import retextEnglish from 'retext-english'
 import retextEquality from 'retext-equality'
 import retextStringify from 'retext-stringify'
-import retextProfanties from 'retext-profanities'
+import retextProfanities from 'retext-profanities'
 
-export const scanBody = (bodyText) => {
-    //TODO add additonal MSFT library of terms to scan against
+export const getTerms = (bodyText) => {
+    //TODO add additional MSFT library of terms to scan against
     if (bodyText === "") {
         return "emptyBody";
     }
     let results;
-    //Compares inputed text against npm libraries of known terms
+    //Compares inputted text against npm libraries of known terms
     try {
         unified()
             .use(retextEnglish)
             .use(retextEquality)
-            .use(retextProfanties)
+            .use(retextProfanities)
             .use(retextStringify)
             .process(bodyText, function (err, file) {
                 results = file;

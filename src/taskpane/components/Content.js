@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Container } from "react-bootstrap";
-import { scanBody } from "../utils/util";
+import { getTerms } from "../utils/util";
 import { Results } from "./Results/Results";
 import Header from "./Header";
 
 export const Content = () => {
     let [termsData, setTermsData] = useState({});
-    
+
     const getBody = () => {
         Office.context.mailbox.item.body.getAsync(
             "text",
@@ -15,10 +15,10 @@ export const Content = () => {
                 // Passes the text of the composed email to the scanner function
                 console.log(result.value);
                 let trimmedText = result.value.replace(/(\s+)/gi, " ");
-                setTermsData(scanBody(trimmedText));
+                setTermsData(getTerms(trimmedText));
             });
     };
-    
+
     return (
         <Container>
             <div>
