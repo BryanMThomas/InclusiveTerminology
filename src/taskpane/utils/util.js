@@ -17,7 +17,7 @@ export const getTerms = (bodyText) => {
             .use(retextEquality)
             .use(retextProfanities)
             .use(retextStringify)
-            .process(bodyText, function (err, file) {
+            .process(bodyText.toLowerCase(), function (err, file) {
                 results = file;
             });
     }
@@ -30,6 +30,13 @@ export const getTerms = (bodyText) => {
     } else {
         //Found non inclusive terms in text
         // return object of terms,alternatives, and reason
-        return results.messages;
+        console.log(results.messages);
+        console.log(typeof (results.messages))
+        //return results.messages;
+        return results.messages.filter((value, index, self) =>
+            index === self.findIndex((temp) => (
+                temp.actual === value.actual
+            ))
+        )
     }
-};
+}

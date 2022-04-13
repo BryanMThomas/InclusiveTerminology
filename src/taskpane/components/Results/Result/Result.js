@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const replaceTerm = (term, alternatives) => {
-  console.log("REPLACE TERM")
+const replaceTerm = (term, alternative) => {
   let body;
   Office.context.mailbox.item.body.getAsync(
     "text",
@@ -9,9 +8,7 @@ const replaceTerm = (term, alternatives) => {
     function callback(result) {
       // Passes the text of the composed email to the scanner function
       const regexPattern = new RegExp(term, 'gmi');
-      body = result.value.replace(regexPattern, alternatives[0])
-      console.log(alternatives[0])
-      console.log(body);
+      body = result.value.replace(regexPattern, alternative)
       Office.context.mailbox.item.body.setAsync(body, function callback(result) {
         console.log(result.value)
       })
@@ -31,6 +28,8 @@ export const Result = (props) => {
     });
   }
 
+  let [selection, setSelection] = useState({});
+
   let reason;
   if (props.result.note) {
     reason = props.result.note;
@@ -43,7 +42,14 @@ export const Result = (props) => {
       <p>Term: {props.result.actual}</p>
       {alternatives ? <p>Alternatives: {alternatives}</p> : <p>Alternatives: No alternatives to suggest</p>}
       {reason ? <p>Reason: {reason}</p> : null}
-      <button onClick={() => { replaceTerm(props.result.actual, props.result.expected) }}>Replace</button>
+      <select name="alternativeSelection" id="alternativeSelection" onChange={(e) => setSelection(e.target.value)}>
+        {props.result.expected.map((element, index) => {
+          return <option key={`alternative-selection-${index}`} value={element}>
+            {element}</option>;
+        })
+        }
+      </select>
+      <button onClick={() => { replaceTerm(props.result.actual, selection) }}>Replace</button>
     </div>
   );
 };
