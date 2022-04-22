@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Container } from "react-bootstrap";
 import { getTerms } from "../utils/util";
 import { Results } from "./Results/Results";
 import Header from "./Header";
@@ -20,20 +19,20 @@ export const Content = () => {
     };
 
     return (
-        <Container>
-            <div>
-                <Header logo={require("./../../../assets/heart-person.png")} title="Inclusion Checker" message="Welcome to Inclusion Checker" />
+        <div >
+            <Header logo={require("./../../../assets/heart-person.png")} title="Inclusion Checker" message="Welcome to Inclusion Checker" />
+            <div className="container">
                 <h2 className="ms-font-xl ms-fontWeight-semilight ms-fontColor-neutralPrimary ms-u-slideUpIn20"> A tool to help you write more inclusive communications"</h2>
                 <p className="ms-font-l">
                     Write your email and then hit <b>Run</b>.
                 </p>
-                <div role="button" id="run" class="ms-welcome__action ms-Button ms-Button--hero ms-font-xl" onClick={() => {
+                <div role="button" id="run" class="primary-button button" onClick={() => {
                     getBody();
                 }}>
                     <span className="ms-Button-label">Run</span>
                 </div>
                 <Results termsData={termsData} setTermsData={setTermsData} />
             </div>
-        </Container>
+        </div>
     );
 };

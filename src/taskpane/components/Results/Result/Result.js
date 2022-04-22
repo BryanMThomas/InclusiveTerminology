@@ -42,14 +42,14 @@ export const Result = (props) => {
       <p>Term: {props.result.actual}</p>
       {alternatives ? <p>Alternatives: {alternatives}</p> : <p>Alternatives: No alternatives to suggest</p>}
       {reason ? <p>Reason: {reason}</p> : null}
-      <select name="alternativeSelection" id="alternativeSelection" onChange={(e) => setSelection(e.target.value)}>
+      <select className="select-box" name="alternativeSelection" id="alternativeSelection" onChange={(e) => setSelection(e.target.value)}>
         {props.result.expected.map((element, index) => {
-          return <option key={`alternative-selection-${index}`} value={element}>
+          return <option className="select-box__option" key={`alternative-selection-${index}`} value={element}>
             {element}</option>;
         })
         }
       </select>
-      <button onClick={() => { replaceTerm(props.result.actual, selection) }}>Replace</button>
+      <button className = "secondary-button button" onClick={() => { replaceTerm(props.result.actual, selection) }}>Replace</button>
     </div>
   );
 };
