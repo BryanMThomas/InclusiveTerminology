@@ -6,6 +6,7 @@
 .pnp.js
 .vscode/*
 
+
 # testing
 /coverage
 
@@ -16,6 +17,7 @@
 # production
 /build
 /dist
+outlook-extension\dist
 
 # misc
 .DS_Store
