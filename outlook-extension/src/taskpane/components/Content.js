@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getTerms } from "../utils/util";
+import { scanText } from "../../util/util";
 import { Results } from "./Results/Results";
 import Header from "./Header";
 
@@ -15,7 +15,22 @@ export const Content = () => {
                 // Passes the text of the composed email to the scanner function
                 console.log(result.value);
                 let trimmedText = result.value.replace(/(\s+)/gi, " ");
-                setTermsData(getTerms(trimmedText));
+                scanText(trimmedText).then((response)=>{
+                    console.log(response.data)
+                    if(response.status !== 200){
+                        //TODO handle unsuccessful paths
+                        console.log("Unsuccessful Scan Call")
+                    }
+                    else{
+                        if(response.data.result === "No Non-Inclusive Terms Found"){
+                            setTermsData(null)
+                        }
+                        else{
+                            setTermsData(response.data.result)
+                        }
+                    }
+                })
+                
             });
     };
 
