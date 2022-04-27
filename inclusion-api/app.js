@@ -5,7 +5,7 @@ const port = 81
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET,POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   next();
 });
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/scan', (req, res) => {
+app.post('/scan', (req, res) => {
   console.log('SCANNING TEXT');
 
   try {

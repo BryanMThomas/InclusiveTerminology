@@ -34,10 +34,17 @@ export default function scan(bodyText) {
         )
         let returnObj = [];
         arr.forEach((item, index) => {
+            let reason;
+            if (item.note) {
+              reason = item.note;
+            } else if (item.reason) {
+              reason = item.reason;
+            }
+
             let tempObj = {
                 "word": item.actual,
                 "alternatives": item.expected,
-                "reason": item.note
+                "reason": reason
             }
             returnObj.push(tempObj)
         })
