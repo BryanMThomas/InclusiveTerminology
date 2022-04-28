@@ -12,7 +12,7 @@ const Styles = styled.div`
 
 export const Search = () => {
   let [resultsData, setResultsData] = useState({});
-  let [inputVal, setinputVal] = useState("");
+  let [inputVal, setInputVal] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,12 +32,12 @@ export const Search = () => {
           >
             <Form.Group controlId="textSearch">
               <Form.Control
-                onChange={(event) => setinputVal(event.target.value)}
+                onChange={(event) => setInputVal(event.target.value)}
                 name="searchForm"
                 className="searchForm"
                 size="lg"
                 type="text"
-                placeholder="Enter a single term or space seperated set of terms"
+                placeholder="Enter a single term or space separated set of terms"
               />
             </Form.Group>
             <Button
