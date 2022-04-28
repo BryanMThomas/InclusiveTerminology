@@ -11,7 +11,7 @@ export const Results = (props) => {
     );
   } else if (
     props.termsData === "emptyBody" ||
-    props.termsData.length === undefined
+    props.termsData.length === undefined || props.termsData.length === 0
   ) {
     //initial load or searched for empty string
     return null;

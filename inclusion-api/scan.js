@@ -4,11 +4,8 @@ import retextEquality from 'retext-equality'
 import retextStringify from 'retext-stringify'
 import retextProfanities from 'retext-profanities'
 
-export const getTerms = (bodyText) => {
+export default function scan(bodyText) {
     //TODO add additional MSFT library of terms to scan against
-    if (bodyText === "") {
-        return "emptyBody";
-    }
     let results;
     //Compares inputted text against npm libraries of known terms
     try {
@@ -29,14 +26,28 @@ export const getTerms = (bodyText) => {
         return null;
     } else {
         //Found non inclusive terms in text
-        // return object of terms,alternatives, and reason
-        console.log(results.messages);
-        console.log(typeof (results.messages))
-        //return results.messages;
-        return results.messages.filter((value, index, self) =>
+        //console.log(results.messages);
+        let arr = results.messages.filter((value, index, self) =>
             index === self.findIndex((temp) => (
                 temp.actual === value.actual
             ))
         )
+        let returnObj = [];
+        arr.forEach((item, index) => {
+            let reason;
+            if (item.note) {
+              reason = item.note;
+            } else if (item.reason) {
+              reason = item.reason;
+            }
+
+            let tempObj = {
+                "word": item.actual,
+                "alternatives": item.expected,
+                "reason": reason
+            }
+            returnObj.push(tempObj)
+        })
+        return returnObj;
     }
 }
