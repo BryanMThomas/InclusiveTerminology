@@ -1,4 +1,4 @@
-#Inclusive Terminology Project
+# Inclusive Terminology Project
 
 ## Goal
 As our language evolves so should our empathy, vocabulary, and word choice. The goal of this project is to assist in the change of deeply embedded habits. We all can begin to consider the implications of words and phrases that have long gone unchallenged and unchanged. By using this search we can start to replace non-inclusive terms with better alternatives. The list utilized by the app is by no means exhaustive but it gives a starting point.
