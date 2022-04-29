@@ -1,0 +1,14 @@
+name: Inclusive Terminology Workflow
+description: Report any non-inclusive terminology found in a code base
+inputs:
+  allFiles:
+    description: "Whether to only run on all files in the code base (true) or only files changed in this PR (false)"
+    default: false
+  GITHUB_TOKEN:
+    description: "enter GITHUB_TOKEN here"
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
+branding:
+  icon: alert-circle
+  color: purple
