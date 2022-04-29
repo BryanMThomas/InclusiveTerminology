@@ -1,0 +1,19 @@
+name: Inclusive Terminology Action
+
+# Run this workflow every time a new commit pushed to your repository
+on:
+  pull_request:
+
+jobs:
+  terminology:
+    runs-on: ubuntu-latest
+
+ steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Comment Inclusive Check on new PR
+        uses: BryanMThomas/inclusive-terminology-workflow@dev
+        with:
+         allFiles: false
+         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
