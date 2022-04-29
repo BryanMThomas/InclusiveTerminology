@@ -3,6 +3,7 @@ name: Inclusive Terminology Action
 # Run this workflow every time a new commit pushed to your repository
 on:
   pull_request:
+    branches: [ action ]
 
 jobs:
   terminology:
