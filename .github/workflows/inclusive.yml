@@ -17,3 +17,4 @@ jobs:
         with:
          allFiles: false
          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+#Master blacklist
