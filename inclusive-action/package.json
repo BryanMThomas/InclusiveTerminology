@@ -1,0 +1,25 @@
+{
+  "name": "inclusive-action",
+  "version": "1.0.0",
+  "description": "Report any non-inclusive terminology found in a code base",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "prepare": "ncc build index.js -o dist --source-map --license licenses.txt",
+    "all": "npm run lint && npm run prepare && npm run test"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.2.5",
+    "@actions/github": "^4.0.0",
+    "@actions/glob": "^0.1.0",
+    "axios": "^0.27.2",
+    "fs-extra": "^9.0.1"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "^0.24.0",
+    "eslint": "^7.4.0",
+    "jest": "^26.1.0"
+  }
+}
