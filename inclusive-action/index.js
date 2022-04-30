@@ -50,8 +50,7 @@ async function run() {
     }
 
     //Completes the term check & generated comment for PR
-    const prBotComment = generateComment(files)
-
+    const prBotComment = await generateComment(files);
     //checks if PR has already been commented on by bot
     const previousPr = await findPreviousComment(octokit, context.repo, pullRequestNumber);
     if (previousPr) {
@@ -62,7 +61,7 @@ async function run() {
       await createComment(octokit, context.repo, pullRequestNumber, prBotComment);
     }
   } catch (err) {
-    setFailed(error.message);
+    setFailed(err.message);
   }
 }
 

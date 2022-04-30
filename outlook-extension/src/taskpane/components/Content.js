@@ -42,7 +42,7 @@ export const Content = () => {
                 <p className="ms-font-l">
                     Write your email and then hit <b>Run</b>.
                 </p>
-                <div role="button" id="run" class="primary-button button" onClick={() => {
+                <div role="button" id="run" className="primary-button button" onClick={() => {
                     setRunState({ text: "Re-Run" })
                     getBody();
 

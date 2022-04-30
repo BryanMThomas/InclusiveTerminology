@@ -34,20 +34,22 @@ var glob = __webpack_require__(8090);
 function formatResponse(checkRes) {
     let header = `# Inclusive Terms Report\n Please make the following language changes.\n`
     let success = `### :sparkles: :rocket: :sparkles: 0 Non-Inclusive Terms Found :sparkles: :rocket: :sparkles:`
-
+    
     let sections = checkRes.map(res => formatFileTable(res))
 
     if (sections.every(section => section === '') || sections.length == 0) {
+        console.log("No Terms found")
         return `${header}${success}`
     } else {
+        console.log("terms found");
         return `${header}${sections.join('\n')}`
     }
-
 }
 
 function formatFileTable(res) {
     // don't post anything for files that are good
-    if (res.result.length == 0) {
+    console.log("FORMAT TABLE"+ res.result)
+    if (res.result === "No Non-Inclusive Terms Found") {
         return ''
     }
 
@@ -63,36 +65,32 @@ function formatFileTable(res) {
 function formatRow(item) {
     return `| ${item.word} | ${item.alternatives} | ${item.reason} |`
 }
-
-/* harmony default export */ const format = ({ formatResponse });
 // CONCATENATED MODULE: ./utils.js
 
 
 
 
-function generateComment(filesList) {
+async function generateComment(filesList) {
     //Verifies files are accessible
     const filteredFilesList = filesList.filter((value) => (0,lib.existsSync)(value));
     //Iterate through files checking each one
-    let checkRes = filteredFilesList.map(file => {
+    return Promise.all(filteredFilesList.map(async file => {
         try {
-            const resp = checkFile(file)
-            return { filePath: file, result: resp }
+            const resp = await checkFile(file);
+            return { filePath: file, result: resp };
         } catch (err) {
             console.log("Error on File: ", file, " Error: ", err)
         }
+    })).then((resolved) => {
+        return formatResponse(resolved);
     })
-    //Return formatted response to comment on PR
-    return /* Cannot get final name for export "formatResponse" in "./format.js" (known exports: default, known reexports: ) */ undefined(checkRes)
 }
 
-function checkFile(file) {
+async function checkFile(file) {
     console.log(`checking ${file}`)
     const body = (0,lib.readFileSync)(file, "utf-8");
-    const fileContentsArr = body.toLowerCase().split(/\s|\n|\r|,/g);
-    checkInput(body).then((response) => {
-        return response.data.result;
-    });
+    const response = await checkInput(body);
+    return response.data.result;
 }
 
 function checkInput(inputText) {
@@ -134,14 +132,6 @@ async function findPreviousComment(github, repo, issue_number) {
 
     return comments.find(comment => comment.body.startsWith(HEADER));
 }
-
-
-/* harmony default export */ const utils = ({
-    findPreviousComment,
-    createComment,
-    updateComment,
-    generateComment
-});
 // CONCATENATED MODULE: ./index.js
 
 
@@ -195,19 +185,18 @@ async function run() {
     }
 
     //Completes the term check & generated comment for PR
-    const prBotComment = /* Cannot get final name for export "generateComment" in "./utils.js" (known exports: default, known reexports: ) */ undefined(files)
-
+    const prBotComment = await generateComment(files);
     //checks if PR has already been commented on by bot
-    const previousPr = await /* Cannot get final name for export "findPreviousComment" in "./utils.js" (known exports: default, known reexports: ) */ undefined(octokit, github.context.repo, pullRequestNumber);
+    const previousPr = await findPreviousComment(octokit, github.context.repo, pullRequestNumber);
     if (previousPr) {
       console.log("Found already created comment")
-      await /* Cannot get final name for export "updateComment" in "./utils.js" (known exports: default, known reexports: ) */ undefined(octokit, github.context.repo, previousPr.id, prBotComment)
+      await updateComment(octokit, github.context.repo, previousPr.id, prBotComment)
     } else {
       console.log("Created new comment")
-      await /* Cannot get final name for export "createComment" in "./utils.js" (known exports: default, known reexports: ) */ undefined(octokit, github.context.repo, pullRequestNumber, prBotComment);
+      await createComment(octokit, github.context.repo, pullRequestNumber, prBotComment);
     }
   } catch (err) {
-    (0,core.setFailed)(error.message);
+    (0,core.setFailed)(err.message);
   }
 }
 
