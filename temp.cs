@@ -1,4 +1,4 @@
-//Healthcheck endpoint to determine health of slave nodes
+//Healthcheck endpoint to determine health of worker nodes
 
-//These will be included with grandfather policy 
+//These will be included with legacy policy 
 
