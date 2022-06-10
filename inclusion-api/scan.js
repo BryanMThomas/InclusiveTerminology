@@ -8,11 +8,9 @@ import poliCheckObj from './PoliCheckTerms.json' assert {type: 'json'};
 export default function scan(bodyText, poliCheck, profanities, inclusion) {
     
     let unifiedResults = scanUnified(bodyText, profanities, inclusion);
-
     let poliCheckResults = poliCheck ? scanPoli(bodyText) : null;
 
     return combineResults(unifiedResults, poliCheckResults);
-
 }
 
 function scanUnified(bodyText, profanities, inclusion) {
