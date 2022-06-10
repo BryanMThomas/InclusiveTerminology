@@ -26,7 +26,11 @@ app.post('/scan', (req, res) => {
   try {
     let data = req.body;
     const inputText = data.input;
-    console.log("Inputted Text: " + data.input);
+    const poliCheck = data.poliCheck;
+    const profanities = data.profanities;
+    const inclusion = data.inclusion;
+    console.log("Inputted Text: " + inputText);
+    console.log("Options: ", inputText, poliCheck, profanities, inclusion);
 
     if (!inputText || inputText.trim().length === 0) {
       console.log('INVALID INPUT - NO TEXT');
@@ -34,8 +38,9 @@ app.post('/scan', (req, res) => {
     }
 
     //Scan Text
-    let scanResults = scan(inputText);
+    let scanResults = scan(inputText,poliCheck,profanities, inclusion);
     let returnResult;
+
     if (scanResults == null) {
       returnResult = "No Non-Inclusive Terms Found"
     }
